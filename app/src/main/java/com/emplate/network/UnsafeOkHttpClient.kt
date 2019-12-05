@@ -8,7 +8,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
-import java.util.concurrent.TimeUnit
 import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
@@ -59,6 +58,8 @@ class UnsafeOkHttpClient(private val mContext: Context) {
         builder.addInterceptor(interceptor)
 
         builder.addInterceptor(HeaderInterceptor(mContext.getString(R.string.api_key)))
+
+        builder.addNetworkInterceptor(ConnectivityInterceptor(mContext))
 
         return builder.build()
     }

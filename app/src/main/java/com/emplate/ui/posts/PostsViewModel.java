@@ -1,7 +1,6 @@
 package com.emplate.ui.posts;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
@@ -17,6 +16,7 @@ import com.emplate.network.PostsApi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -25,10 +25,10 @@ import io.reactivex.schedulers.Schedulers;
 
 public class PostsViewModel extends ViewModel {
 
-    private static final String TAG = "PostsViewModel";
-
     private final PostsApi mainApi;
     private final Context context;
+
+    private Throwable throwable;
 
     private MediatorLiveData<Resource<List<Post>>> posts;
 
@@ -36,7 +36,6 @@ public class PostsViewModel extends ViewModel {
     public PostsViewModel(Context context, PostsApi mainApi) {
         this.mainApi = mainApi;
         this.context = context;
-        Log.d(TAG, "PostsViewModel: viewmodel is working...");
     }
 
     public LiveData<Resource<List<Post>>> observePosts() {
@@ -48,6 +47,7 @@ public class PostsViewModel extends ViewModel {
                             .onErrorReturn(new Function<Throwable, List<Post>>() {
                                 @Override
                                 public List<Post> apply(Throwable throwable) {
+                                    PostsViewModel.this.throwable = throwable;
                                     return new ArrayList<>();
                                 }
                             })
@@ -57,8 +57,12 @@ public class PostsViewModel extends ViewModel {
                                     if (posts.size() > 0) {
                                         return Resource.success(posts);
                                     } else {
-                                        return Resource.error(context.getString(R.string.empty_posts),
-                                                null);
+                                        if (throwable != null)
+                                            return Resource.error(Objects.requireNonNull(throwable.getMessage()),
+                                                    null);
+                                        else
+                                            return Resource.error(context.getString(R.string.empty_posts),
+                                                    null);
                                     }
                                 }
                             })
