@@ -11,7 +11,13 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuildersModule {
 
+    @ContributesAndroidInjector(
+        modules = [
+            PostFragmentBuildersModule::class,
+            PostViewModelsModule::class,
+            PostsModule::class
+        ]
+    )
     @PostsScope
-    @ContributesAndroidInjector(modules = [PostFragmentBuildersModule::class, PostViewModelsModule::class, PostsModule::class])
-    abstract fun contributePostsActivity(): PostsActivity?
+    abstract fun contributePostsActivity(): PostsActivity
 }

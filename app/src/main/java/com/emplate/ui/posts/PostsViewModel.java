@@ -12,7 +12,7 @@ import com.emplate.BuildConfig;
 import com.emplate.R;
 import com.emplate.model.Post;
 import com.emplate.model.Resource;
-import com.emplate.network.PostsApi;
+import com.emplate.network.posts.PostsApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,5 +77,11 @@ public class PostsViewModel extends ViewModel {
             });
         }
         return posts;
+    }
+
+    @Override
+    protected void onCleared() {
+        posts = null;
+        super.onCleared();
     }
 }

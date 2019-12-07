@@ -11,8 +11,11 @@ class PostsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        supportFragmentManager.beginTransaction().add(R.id.frame, PostsFragment.newInstance())
-            .commitAllowingStateLoss()
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.frame, PostsFragment.newInstance(),"PostsFragment")
+                .commit()
+        }
     }
 }

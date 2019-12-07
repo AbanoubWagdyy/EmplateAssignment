@@ -8,5 +8,5 @@ import dagger.android.ContributesAndroidInjector
 abstract class PostFragmentBuildersModule {
 
     @ContributesAndroidInjector
-    abstract fun contributePostsFragment(): PostsFragment?
+    abstract fun contributePostsFragment(): PostsFragment
 }

@@ -1,4 +1,4 @@
-package com.emplate.network
+package com.emplate.network.posts
 
 import com.emplate.model.Post
 import io.reactivex.Flowable

@@ -3,6 +3,7 @@ package com.emplate.di
 import android.app.Application
 import android.content.Context
 import com.emplate.App
+import com.emplate.di.posts.PostFragmentBuildersModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -11,7 +12,8 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [AndroidSupportInjectionModule::class, ActivityBuildersModule::class,
+    modules = [AndroidSupportInjectionModule::class,
+        ActivityBuildersModule::class,
         AppModule::class]
 )
 interface AppComponent : AndroidInjector<App?> {
